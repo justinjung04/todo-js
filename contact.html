@@ -36,16 +36,168 @@
 	    		</h1>
 	    	</div>
 	    	<div class="col-md-10">
-	    		<h1>Justin Jung</h1>
-	    		<p>
-	    			Phone: 778-344-0626<br>
-	    			Email: <a href="mailto:justinjung90@hotmail.com">justinjung90@hotmail.com</a><br>
-					LinkedIn: <a href="ca.linkedin.com/in/justinjung90">ca.linkedin.com/in/justinjung90</a>
-	    		</p>
+	    		<div class="row">
+	    			<div class="col-md-6">
+	    				<h1>Justin Jung</h1>
+			    		<p>
+			    			Phone: (778) 344-0626<br>
+			    			Email: <a href="mailto:justinjung90@hotmail.com">justinjung90@hotmail.com</a><br>
+							LinkedIn: <a href="http://ca.linkedin.com/in/justinjung90" target="_blank">http://ca.linkedin.com/in/justinjung90</a><br>
+							Github <a href="https://github.com/justinjung90" target="_blank">https://github.com/justinjung90</a><br>
+							<a href="files/resume.pdf" target="_blank" class="btn btn-primary" style="margin-top:5px;">View Resume</a>
+			    		</p>
+	    			</div>
+	    			<div class="col-md-6" id="div_canvas"></div>
+	    		</div>
+	    		<br>
+	    		<div class="row">
+	    			<div class="col-md-6">
+	    				<h3>Other Projects</h3>
+			    		<p>
+			    			<b>Web App Flappy Bird</b><br>
+			    			Imitated Flappy Bird as a web-app and uploaded to a personal website. Guided by HTML5 Game Programming Tutorial available in Youtube.<br>
+			    			<a href="http://justinjung90.com" target="_blank">http://justinjung90.com</a>
+			    		</p>
+			    		<p>
+			    			<b>Android Game - Battle of the Somme</b><br>
+			    			An epic memory game with charming features (competition, rewards, skins). Enjoyed not only programming, but also UI/UX design and overall game flow!<br>
+			    			<a href="https://play.google.com/store/apps/details?id=com.luxl.botsandroid" target="_blank">https://play.google.com/store/apps/details?id=com.luxl.botsandroid</a>
+			    		</p>
+			    		<p>
+			    			<b>20+ Java Demo Programs</b><br>
+			    			Demonstration programs for Java available in GitHub<br>
+			    			<a href="https://github.com/justinjung90?tab=repositories" target="_blank">https://github.com/justinjung90?tab=repositories</a>
+			    		</p>
+			    		<p>
+			    			<b>CoderByte Programming Challenges</b><br>
+			    			45+ programming challenges solved with Java<br>
+			    			<a href="http://www.coderbyte.com/CodingArea/Profile/?user=justinjung90" target="_blank">http://www.coderbyte.com/CodingArea/Profile/?user=justinjung90</a>
+			    		</p>
+	    			</div>
+	    			<div class="col-md-6">
+	    				<h3>Technical Skills</h3>
+    					<table class="table table-striped" style="font-size:14px;">
+	    					<tr>
+	    						<td>OOP Languages</td>
+	    						<td>Java, C, C#</td>
+	    					</tr>
+	    					<tr>
+	    						<td>Web & Server</td>
+	    						<td>HTML5, CSS3, PHP, MySQL</td>
+	    					</tr>
+	    					<tr>
+	    						<td>JavaScript</td>
+	    						<td>jQuery, Underscore.js, Backbone.js, AngularJS, Ember.js</td>
+	    					</tr>
+	    					<tr>
+	    						<td>Mobile</td>
+	    						<td>Android</td>
+	    					</tr>
+	    					<tr>
+	    						<td>Operating Systems</td>
+	    						<td>Windows, Linux</td>
+	    					</tr>
+	    					<tr>
+	    						<td>Cloud Services</td>
+	    						<td>Amazon Web Services (AWS)</td>
+	    					</tr>
+	    					<tr>
+	    						<td>Version Control</td>
+	    						<td>Git</td>
+	    					</tr>
+	    				</table>
+	    			</div>
+	    		</div>
+				
+	    		<br>
+	    		
 	    	</div>
+	    	
 	    </div>
 	</div>
 	<script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/sprite.js"></script>
+    <script>
+    	function main() {
+    		div_canvas = document.getElementById("div_canvas");
+			canvas = document.createElement("canvas");
+			canvas.width = 300;
+			canvas.height = 200;
+			ctx = canvas.getContext("2d");
+			div_canvas.appendChild(canvas);
+			
+			var img = new Image();
+			img.onload = function() {
+				initSprites(this);
+				run();
+			}
+			img.src = "img/animation_mini.png";
+    	}
+
+    	var rotate_angle = 0;
+    	var box_top_height = 110;
+		var direction_up = false;
+
+		function run() {
+			var loop = function() {
+				update();
+				render();
+				window.setTimeout(loop, 100);
+			}
+			window.setTimeout(loop, 100);
+		}
+
+		function update() {
+			if(box_top_height == 110 || box_top_height == 90) {
+				direction_up = !direction_up;
+			}
+			if(direction_up) {
+				box_top_height--;
+				rotate_angle -= 0.03;
+			} else {
+				box_top_height++;
+				rotate_angle += 0.03;
+			}
+		}
+
+		function render() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			draw_gear_big();
+			draw_gear_small_red();
+			draw_gear_small_blue();
+			box_rope.draw(ctx, 85, 46);
+			box_body.draw(ctx, 36, 112);
+			box_top.draw(ctx, 36, box_top_height);
+		}
+
+		function draw_gear_big() {
+			ctx.save();
+			ctx.translate(62, 58);
+			ctx.rotate(rotate_angle);
+			gear_big.draw(ctx, -62, -58);
+			ctx.restore();
+		}
+
+		function draw_gear_small_red() {
+			ctx.save();
+			ctx.translate(110, 35);
+			ctx.translate(45, 45);
+			ctx.rotate(-rotate_angle*1.3);
+			gear_small_red.draw(ctx, -45, -45);
+			ctx.restore();
+		}
+
+		function draw_gear_small_blue() {
+			ctx.save();
+			ctx.translate(184, 16);
+			ctx.translate(40, 45);
+			ctx.rotate(rotate_angle*1.3);
+			gear_small_blue.draw(ctx, -40, -45);
+			ctx.restore();
+		}
+
+		main();
+    </script>
 </body>
 </html>

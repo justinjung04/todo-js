@@ -65,7 +65,7 @@
 				this.input = this.$el.find('#user-input');
 			},
 			_add: function(e) {
-				if((e.keyCode==13)) {
+				if((e.keyCode==13) && this.input.val().length>0) {
 					var new_todo = new Todo({text: this.input.val()});
 					this.input.val('');
 					this._addOne(new_todo);

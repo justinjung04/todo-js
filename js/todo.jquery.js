@@ -53,7 +53,6 @@
 	}
 
 	function _done(target) {
-		console.log(target);
 		target.toggleClass('done');
 	}
 
